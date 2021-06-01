@@ -84,7 +84,7 @@ class WelcomeScreen extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.only(top:40),
-                height: 100,
+                height: 120,
                color: Colors.grey[200],
                width:  mediaScreen.size.height * 0.95,
                child: Column(
@@ -106,7 +106,7 @@ class WelcomeScreen extends StatelessWidget {
                      child: Padding(
                        padding: const EdgeInsets.all(8.0),
                        child: Text(
-                         'CoviApp team : Samar Pratap Singh, Saksham Arya, Abhinandan De, Aryan Singh, Kunal Singh, Sayantan Das',
+                         'CoviApp team : Samar Pratap Singh, Saksham Arya, Abhinandan De, Aryan Agarwal, Kunal Singh, Suryam Arnav Kalra, Sayantan Das',
                          style: TextStyle(
                              fontWeight:FontWeight.w300,
                              fontSize: 12.0,

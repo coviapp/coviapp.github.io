@@ -229,6 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       {
                         if(hasUserAnsweredDoYouHaveCovidBefore=="yes")
                           {
+                            _checkLoggedIn.setIfAnsweredBeforeFlag(true);
                             Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                 MonitoringQuestionsTransitionScreen(
                                   rollNo: rollNo,
@@ -236,6 +237,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         else
                           {
+                            _checkLoggedIn.setIfAnsweredBeforeFlag(false);
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
