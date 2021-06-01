@@ -11,4 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
+      - name: add web support
+        run: flutter create .
+        working-directory: .
       - uses: erickzanardo/flutter-gh-pages@v3
