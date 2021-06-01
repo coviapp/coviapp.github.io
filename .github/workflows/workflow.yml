@@ -21,6 +21,9 @@ jobs:
       - name: Upgrades Flutter
         run: flutter upgrade
         working-directory: .
+      - name: Add Web
+        run: flutter create .
+        working-directory: .
       - name: Enable Web
         run: flutter config --enable-web
         working-directory: .
