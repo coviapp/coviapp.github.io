@@ -27,7 +27,7 @@ void callbackDispatcher() {
   Workmanager.executeTask((task, inputData) {
 
     FlutterLocalNotificationsPlugin flip = new FlutterLocalNotificationsPlugin();
-    var android = new AndroidInitializationSettings('logo1.png');
+    var android = new AndroidInitializationSettings('logo1');
     var IOS = new IOSInitializationSettings();
 
     var settings = new InitializationSettings(android: android, iOS: IOS);
