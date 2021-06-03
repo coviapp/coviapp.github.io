@@ -14,7 +14,7 @@ void notificationsManager(BuildContext context) {
   Workmanager.registerPeriodicTask(
     "2",
     "simplePeriodicTask",
-    frequency: Duration(minutes: 15),
+    frequency: Duration(hours: 6),
   );
 }
 Future notificationSelected(String payload) async {
