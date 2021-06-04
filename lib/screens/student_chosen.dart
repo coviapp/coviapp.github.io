@@ -194,6 +194,12 @@ class _StudentChosenState extends State<StudentChosen> {
   int id ;
   String studentRollNo;
 
+  bool isNumeric(String s) {
+    if (s == "") {
+      return false;
+    }
+    return double.tryParse(s) != null;
+  }
 
   @override
   void initState() {
@@ -300,7 +306,9 @@ class _StudentChosenState extends State<StudentChosen> {
                 ),
                 onTap: () {
                   setState(() {
-                    if(parentMobileNo.length != 10)
+                    bool isNum = isNumeric(parentMobileNo);
+                    print("isNum = $isNum");
+                    if(parentMobileNo.length != 10 || isNum==false)
                     {
                       AlertBox(
                           context: context,

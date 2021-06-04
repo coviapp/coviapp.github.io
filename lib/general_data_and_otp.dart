@@ -67,7 +67,8 @@ class _GeneralDataSenderState extends State<GeneralDataSender> {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     Map responseBody = json.decode(response.body) as Map;
-    if (response.statusCode != 200) {
+    String status = responseBody['status'];
+    if (response.statusCode != 200 ||  status!='success') {
       _checkLoggedIn.setVisitingFlag(false);
       _checkLoggedIn.setIfAnsweredBeforeFlag(false);
      }
@@ -99,7 +100,10 @@ class _GeneralDataSenderState extends State<GeneralDataSender> {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     Map responseBody = json.decode(response.body) as Map;
-    if (response.statusCode == 200) {
+
+    String type = responseBody["type"];
+
+    if (response.statusCode == 200 && type == "PAT") {
       _checkLoggedIn.setVisitingFlag(true);
       _checkLoggedIn.setRollNo(rollNo);
     } else {

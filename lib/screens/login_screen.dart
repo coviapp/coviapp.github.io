@@ -89,7 +89,9 @@ class _LoginScreenState extends State<LoginScreen> {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     Map responseBody = json.decode(response.body) as Map;
-    if (response.statusCode == 200) {
+    String type = responseBody["type"];
+
+    if (response.statusCode == 200 && type == "PAT") {
       _checkLoggedIn.setVisitingFlag(true);
       _checkLoggedIn.setRollNo(rollNo);
       _checkLoggedIn.setPasswordToken(password);

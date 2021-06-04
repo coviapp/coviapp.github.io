@@ -154,7 +154,6 @@ class _MonitoringQuestionsState extends State<MonitoringQuestions> {
       "fever":feverTemp,
       "spo2":spo2,
       "patient_condition" : extraHealthCondition.toLowerCase(),
-      //"rollNo" : rollNo,
       "food_supply":haveFoodOrMedicalsupplies,
       "pulse_rate":pulseRate,
     };
@@ -172,7 +171,7 @@ class _MonitoringQuestionsState extends State<MonitoringQuestions> {
     else {
       valueFromBack = true;
     }
-    print("puData in general data_and_otp");
+    print("puData in monitoring screen");
     print(" == token : {$token}");
     msg = responseBody["message"];
     print(" == msg : {$msg}");
@@ -208,7 +207,9 @@ class _MonitoringQuestionsState extends State<MonitoringQuestions> {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     Map responseBody = json.decode(response.body) as Map;
-    if (response.statusCode == 200) {
+    String type = responseBody["type"];
+
+    if (response.statusCode == 200 && type == "PAT") {
       _checkLoggedIn.setVisitingFlag(true);
       _checkLoggedIn.setRollNo(rollNo);
     } else {
