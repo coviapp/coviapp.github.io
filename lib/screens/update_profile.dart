@@ -349,6 +349,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     vaccineName = widget.vaccineName;
     isVaccinated = widget.isVaccinated;
     hall = widget.hall;
+    vaccineName = widget.vaccineName==''?'Select Vaccine Name':widget.vaccineName;
   }
 
   @override
@@ -424,9 +425,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       hintTextColor: Colors.black,
                       dropDownColor: Colors.white,
                       dropDownItemColor: Colors.black,
-                      buttonHintText: widget.vaccineName==''?'Select Vaccine Name':widget.vaccineName,
+                      buttonHintText: vaccineName,
                       items: getDropDownItems(categoryList),
-                      value: widget.vaccineName==''?'Select Vaccine Name':widget.vaccineName,
+                      value: vaccineName,
                       onTap: (value) {
                         setState(() {
                           vaccineName = value;
@@ -520,7 +521,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   }
                   else
                   {
-                    if(isVaccinated.toLowerCase()=='yes' && (vaccineName=='Select Vaccine Name' || (firstDose==null && widget.firstDose=='')))
+                    if(isVaccinated.toLowerCase()=='yes' && (vaccineName=='Select Vaccine Name'||vaccineName=='Not Applicable'||vaccineName=='' || (firstDose==null && widget.firstDose=='')))
                     {
                       AlertBox(
                           context: context,
