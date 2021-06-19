@@ -27,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String mobileNo1 = '';
   String password = '';
   int idFromBack;
+  bool acceptedTerms = false;
 
   Widget buildRollOrEcNumber() => buildTitle(
     title: 'Username',
@@ -71,8 +72,11 @@ class _LoginScreenState extends State<LoginScreen> {
   bool valueFromBack;
   String hasUserAnsweredDoYouHaveCovidBefore;
   String token = "";
-
+  bool _loading = false;
   Future checkPassword (String password, String mobileNo, String rollNo) async {
+    setState(() {
+      _loading = true;
+    });
     var url = Uri.parse('https://imedixbcr.iitkgp.ac.in/api/user/login');
     //print(mobileNo);
     print(password);
@@ -112,6 +116,9 @@ class _LoginScreenState extends State<LoginScreen> {
     _checkLoggedIn.setRollNo(rollNo);
     _checkLoggedIn.setPasswordToken(password);
     print("Value Form Back = ${valueFromBack}");
+    setState(() {
+      _loading = false;
+    });
     return valueFromBack??false;
   }
 
@@ -151,7 +158,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return (_loading == true)
+        ? Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.white,
+          valueColor: new AlwaysStoppedAnimation<Color>(kWeirdBlue),
+        ),
+      ),
+    )
+        :Scaffold(
       body: Container(
         child: ListView(
           shrinkWrap: true,
@@ -182,6 +198,43 @@ class _LoginScreenState extends State<LoginScreen> {
                   buildRollOrEcNumber(),
                   const SizedBox(height: 12),
                   buildPassword(),
+                  const SizedBox(height: 12),
+              Container(
+                color: Colors.blueGrey[100],
+                padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+                child: CheckboxListTile(
+                  title: RichText(
+                    text: new TextSpan(
+                      children: [
+                        new TextSpan(
+                          text: 'I agree to use this app for Covid-19 monitoring by BC Roy Technology Hospital, IIT Kharagpur.',
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                        new TextSpan(
+                          text: ' This app is only for the beneficiaries of the BC Roy Technology Hospital IIT Kharagpur.',
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  value: acceptedTerms,
+                  activeColor: kWeirdBlue,
+                  checkColor: Colors.white,
+                  onChanged: (bool value) {
+                    setState(() {
+                      acceptedTerms = value;
+                    });
+                  },
+                ),
+              ),
                 ],
               ),
             ),
@@ -223,7 +276,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 bool value = false;
                 value = await checkPassword(password, mobileNo1, rollNo);
                 print("value after checking password = ${value}");
-                if(value==true)
+
+                if(value==true && acceptedTerms==true)
                   {
                     _checkLoggedIn.setRollNo(rollNo);
                     _checkLoggedIn.setPasswordToken(password);
@@ -261,6 +315,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                   }
                 else {
+                  if(value==false)
                   AlertBox(
                     context: context,
                     alertContent:
@@ -273,6 +328,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       _checkLoggedIn.setVisitingFlag(false);
                     },
                   ).showAlert();
+                  else if(acceptedTerms==false)
+                    {
+                      AlertBox(
+                        context: context,
+                        alertContent:
+                        'We cannot proceed with login if the you dont accept the terms.',
+                        alertTitle: 'Terms and Conditions',
+                        rightActionText: 'Close',
+                        leftActionText: ' ',
+                        onPressingRightActionButton: () {
+                          Navigator.of(context).pop();
+                          _checkLoggedIn.setVisitingFlag(false);
+                        },
+                      ).showAlert();
+                    }
                 }
               },
             )
